@@ -1,7 +1,7 @@
 name: Dependent Jobs Workflow
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
@@ -28,6 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start Deployment
-        run: echo "Deploying application..."
+        run: echo "Building application - Part B"
+
       - name: Simulate Deployment
         run: sleep 5
