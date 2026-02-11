@@ -1,7 +1,7 @@
 name: Dependent Jobs Workflow
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -9,26 +9,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Start Build
+      - name: Print Build Message
         run: echo "Building application..."
-      - name: Simulate Build
+      - name: Simulate Build Process
         run: sleep 5
 
   test:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Start Testing
+      - name: Print Test Message
         run: echo "Running tests..."
-      - name: Simulate Tests
+      - name: Simulate Testing Process
         run: sleep 5
 
   deploy:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Start Deployment
-        run: echo "Building application - Part B"
-
-      - name: Simulate Deployment
+      - name: Print Deploy Message
+        run: echo "Deploying application..."
+      - name: Simulate Deployment Process
         run: sleep 5

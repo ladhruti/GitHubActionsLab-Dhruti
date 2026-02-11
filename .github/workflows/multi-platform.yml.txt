@@ -1,0 +1,54 @@
+name: Multi-Platform Testing Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ubuntu-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Display OS Info
+        run: uname -a
+
+      - name: Create File
+        run: echo "Hello from Ubuntu" > ubuntu.txt
+
+      - name: Show File Content
+        run: cat ubuntu.txt
+
+
+  windows-job:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Display OS Info
+        run: systeminfo
+
+      - name: Create File
+        run: echo Hello from Windows > windows.txt
+
+      - name: Show File Content
+        run: type windows.txt
+
+
+  macos-job:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Display OS Info
+        run: uname -a
+
+      - name: Create File
+        run: echo "Hello from macOS" > macos.txt
+
+      - name: Show File Content
+        run: cat macos.txt
