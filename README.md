@@ -1,67 +1,48 @@
 
 # GitHub Actions Lab – Automated Workflows
 
-## Part A – Workflow 1: Job Dependencies
 
-In Part A, I created a workflow that demonstrates job dependencies using the `needs` keyword. The workflow is triggered on a push to the main branch.
+I used the `needs` keyword in Part A to design a process that illustrates job dependencies. A push to the main branch initiates the workflow.
 
-There are three jobs in this workflow:
-
-- build  
+This workflow consists of three jobs:
+- construct  
 - test  
-- deploy  
+- deploy These tasks execute in the following sequence:
 
-These jobs run in the following order:
+Build, test, and then deploy  
 
-build → test → deploy  
+The `build` job, the `test` job, and the `deploy` job are dependent on each other. This guarantees that each job doesn't begin until the last one has finished satisfactorily.
 
-The `test` job depends on the `build` job, and the `deploy` job depends on the `test` job. This ensures that each job waits for the previous job to complete successfully before starting.
+Running on `ubuntu-latest`, each task has several phases that use sleep functions and echo commands to mimic actual work.
 
-Each job runs on `ubuntu-latest` and includes multiple steps to simulate real work using echo commands and sleep functions.
+Important ideas illustrated in Part A:
 
-Key concepts demonstrated in Part A:
+- `needs` establishes inter-job dependencies  The operating system environment is defined by `runs-on`.  
+- The workflow trigger is `push`.  
+--- ## Workflow 2: Multi-Platform Testing in Part B
 
-- `needs` creates dependencies between jobs  
-- `runs-on` defines the operating system environment  
-- `push` is used as the workflow trigger  
+To illustrate parallel execution, I developed a workflow in Part B that executes separate jobs on various operating systems.
 
----
+A pull request to the main branch initiates this process.
 
-## Part B – Workflow 2: Multi-Platform Testing
+Three separate positions exist:
+Ubuntu-job, which operates on Ubuntu-latest  
+- windows-job (uses the most recent version of Windows)  
+- macos-job (operates on the most recent version of macos)  
 
-In Part B, I created a workflow that runs independent jobs on different operating systems to demonstrate parallel execution.
+Every job carries out the subsequent actions:
+Utilizing `actions/checkout@v4`, the repository is checked out.  Information about the operating system is displayed.  Executes a command specific to the OS  
+Produces a basic file  - Shows the contents of the file  
 
-This workflow is triggered on a pull request to the main branch.
+All three processes execute concurrently because this workflow does not employ the `needs` keyword.
+Important ideas given in Part B:
 
-There are three independent jobs:
+When `needs` are absent, jobs can operate concurrently.  By using `pull_request` as the workflow trigger  
+Different operating systems are specified by -{runs-on`.  
+- `actions/checkout@v4` verifies the code of the repository  
+---## Difficulties Encountered
 
-- ubuntu-job (runs on ubuntu-latest)  
-- windows-job (runs on windows-latest)  
-- macos-job (runs on macos-latest)  
+I ran across some minor YAML indentation and workflow trigger configuration issues throughout this lab. These were fixed by closely examining the indentation and making sure the right branch was used when generating pull requests.
+The ---
 
-Each job performs the following steps:
-
-- Checks out the repository using `actions/checkout@v4`  
-- Displays operating system information  
-- Runs an OS-specific command  
-- Creates a simple file  
-- Displays the file content  
-
-Since no `needs` keyword is used in this workflow, all three jobs run simultaneously.
-
-Key concepts demonstrated in Part B:
-
-- Absence of `needs` allows jobs to run in parallel  
-- `pull_request` is used as the workflow trigger  
-- `runs-on` specifies different operating systems  
-- `actions/checkout@v4` checks out repository code  
-
----
-
-## Challenges Faced
-
-During this lab, I encountered minor YAML indentation issues and workflow trigger configuration problems. These were resolved by carefully reviewing indentation and ensuring the correct branch was used when creating pull requests.
-
----
-
-This lab demonstrates both dependent job execution and parallel job execution using GitHub Actions.
+This experiment uses GitHub Actions to illustrate both parallel and dependent task execution.
